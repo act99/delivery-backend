@@ -3,6 +3,11 @@
 The backend of Delivery service.
 Postgresql, Nestjs, Typeorm, Graphsql
 
+## It's just my education project.
+
+It is just a project for education. I'm just thinking out loud in README.md.
+So, please skip it if you are reading it...
+
 Please `npm i`
 if you want to check it.
 then `npm run `
@@ -35,8 +40,25 @@ then `npm run `
 (hash password are made with bcrypt (npm i bcrypt / npm i @types/bcrypt --dev-only), make @BeforeInsert ,saltRounds = 10 (라운드는 10번이 가장 무난하다고 함))
 (jsonwebtoken `npm i jsonwebtoken`, `npm i @types/jsonwebtoken --only-dev` then made JWTMODULE)
 
-## HANDMADE_MODULE
+## Auth
 
+HANDMADE_MODULE
 JWTMODULE (Module for jsonwebtoken)
+
+JWTMODULE is a module for Authentication. HTTP Headers give us a token first. To intercept http things, we have to make a jwt middleware.
+This middleware takes header data then made token, and decode. For making a process of handling token and decoding token, we made jwt service.
+Middleware finds user that has specific 'id' by using userService. UserService finds user that has the 'id' with typeorm's findOne function.
+And then if we find the user in database, we're going to attach the user to request object `req['user'] = user;`
+
+In app.module, we need to look context. The context of apollo server and the context of graphql is a property that you can use to send all informations to all resolvers.
+First, the Jwt middleware was hit then we are sending `user: req['user']` to graphql context.
+
+if you look users.resolvers, user.resolvers has a guard. The guard implements a function(with canActivate).
+
+CORE.ENTITY.TS
+It includes common fields of all entities.
+It has ObjectType() because we have to create `id, createdAt and updateAt` in all entities (user.entity...etc..)
+
+@AuthUser() => It send the information of current loggin user. `@AuthUser() authUser: User`
 
 https://github.com/act99/delivery-backend
