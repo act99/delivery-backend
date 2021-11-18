@@ -39,6 +39,13 @@ Please create `.env.dev` & `.env.test`
 - role(client|owner|delivery)
 - token
 
+## Restaurant Model
+
+- name
+- category
+- address
+- coverImage
+
 (hash password are made with bcrypt (npm i bcrypt / npm i @types/bcrypt --dev-only), make @BeforeInsert ,saltRounds = 10 (라운드는 10번이 가장 무난하다고 함))
 (jsonwebtoken `npm i jsonwebtoken`, `npm i @types/jsonwebtoken --only-dev` then made JWTMODULE)
 
@@ -62,5 +69,7 @@ It includes common fields of all entities.
 It has ObjectType() because we have to create `id, createdAt and updateAt` in all entities (user.entity...etc..)
 
 @AuthUser() => It send the information of current loggin user. `@AuthUser() authUser: User`
+
+Mail verification are made with Mailgun.
 
 https://github.com/act99/delivery-backend
