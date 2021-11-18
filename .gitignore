@@ -117,3 +117,4 @@ dist
 .yarn/install-state.gz
 .pnp.*
 src/users/users.service.ts
+.DS_Store 

@@ -12,6 +12,8 @@ Please `npm i`
 if you want to check it.
 then `npm run `
 
+Please create `.env.dev` & `.env.test`
+
 ## Read for WSL2 & Postgresql for Windows
 
 `When you use WSL2 and you clone this repo in Ubuntu home(cd ~) / and install postgresql in Windows. You have to do ....`
