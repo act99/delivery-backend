@@ -67,7 +67,19 @@ import { Chat } from './chat/entities/chat.entity';
     // }),
     GraphQLModule.forRoot({
       autoSchemaFile: true,
-      context: ({ req }) => ({ user: req['user'] }),
+      installSubscriptionHandlers: true,
+
+      // subscriptions: {
+      //   'graphql-ws': true,
+      // },
+      context: ({ req, connection }) => {
+        if (req) {
+          return req;
+        } else {
+          return connection;
+        }
+        // ({ user: req['user'] })
+      },
     }),
     JwtModule.forRoot({
       privateKey: process.env.PRIVATE_KEY,

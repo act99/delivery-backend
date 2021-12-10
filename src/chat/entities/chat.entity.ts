@@ -1,5 +1,6 @@
 import { Field, InputType, ObjectType } from '@nestjs/graphql';
 import { IsNumber, IsString } from 'class-validator';
+import { isNullableType } from 'graphql';
 import { CoreEntity } from 'src/common/entities/core.entity';
 import {
   Column,
@@ -12,15 +13,6 @@ import {
 @ObjectType()
 @Entity()
 export class Chat extends CoreEntity {
-  //   @PrimaryGeneratedColumn()
-  //   @Field((type) => Number)
-  //   @IsNumber()
-  //   id: number;
-
-  //   @CreateDateColumn()
-  //   @Field((type) => Date)
-  //   createdAt: Date;
-
   @Field((type) => String)
   @Column()
   @IsString()

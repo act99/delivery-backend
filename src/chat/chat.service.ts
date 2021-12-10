@@ -1,6 +1,6 @@
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { CreateChatDto } from './dtos/create-chat.dto';
+import { CreateChatDto, CreateChatDtoOutput } from './dtos/create-chat.dto';
 import { Chat } from './entities/chat.entity';
 
 export class ChatService {
@@ -10,8 +10,15 @@ export class ChatService {
   getChat(): Promise<Chat[]> {
     return this.chats.find();
   }
-  createChat(createChatDto: CreateChatDto): Promise<Chat> {
-    const newChat = this.chats.create(createChatDto);
-    return this.chats.save(newChat);
+  async createChat({
+    user,
+    text,
+  }: CreateChatDto): Promise<CreateChatDtoOutput> {
+    try {
+      await this.chats.save(this.chats.create({ user, text }));
+      return { ok: true };
+    } catch (e) {
+      return { ok: false, error: 'Error!! Chatting Error!' };
+    }
   }
 }
