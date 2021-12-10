@@ -39,6 +39,16 @@ Please create `.env.dev` & `.env.test`
 - role(client|owner|delivery)
 - token
 
+## Stock Entity
+
+- close, vol, open, high......
+
+## Chat Entity
+
+- core
+- user
+- text
+
 ## Restaurant Model
 
 - name
