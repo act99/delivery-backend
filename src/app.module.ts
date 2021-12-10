@@ -17,6 +17,11 @@ import { JwtMiddleware } from './jwt/jwt.middleware';
 import { Verification } from './users/entities/verification.entity';
 import { MailModule } from './mail/mail.module';
 import { Category } from './restaurants/entities/category.entity';
+import { StockGsModule } from './stock-gs/stock-gs.module';
+import { Gs } from './stock-gs/entities/stock-gs.entity';
+import { ChatModule } from './chat/chat.module';
+import { AppGateway } from './app.gateway';
+import { Chat } from './chat/entities/chat.entity';
 
 @Module({
   imports: [
@@ -46,7 +51,7 @@ import { Category } from './restaurants/entities/category.entity';
       database: process.env.DB_NAME,
       synchronize: process.env.NODE_ENV !== 'prod',
       logging: process.env.NODE_ENV !== 'prod',
-      entities: [Users, Verification, Restaurant, Category],
+      entities: [Users, Verification, Restaurant, Category, Gs, Chat],
     }),
 
     // TypeOrmModule.forRoot({
@@ -74,9 +79,13 @@ import { Category } from './restaurants/entities/category.entity';
     }),
     UsersModule,
     RestaurantsModule,
+    StockGsModule,
+    ChatModule,
   ],
   controllers: [],
-  providers: [],
+  providers: [
+    // AppGateway
+  ],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
