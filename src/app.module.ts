@@ -74,7 +74,7 @@ import { Chat } from './chat/entities/chat.entity';
       // },
       context: ({ req, connection }) => {
         if (req) {
-          return req;
+          return { user: req['user'] };
         } else {
           return connection;
         }
