@@ -20,8 +20,8 @@ import { Category } from './restaurants/entities/category.entity';
 import { StockGsModule } from './stock-gs/stock-gs.module';
 import { Gs } from './stock-gs/entities/stock-gs.entity';
 import { ChatModule } from './chat/chat.module';
-import { AppGateway } from './app.gateway';
 import { Chat } from './chat/entities/chat.entity';
+import { CommonModule } from './common/common.module';
 
 @Module({
   imports: [
@@ -73,12 +73,15 @@ import { Chat } from './chat/entities/chat.entity';
       //   'graphql-ws': true,
       // },
       context: ({ req, connection }) => {
+        // const TOKEN_KEY = 'x-jwt';
+        // return {
+        //   token: req ? req.headers[TOKEN_KEY] : connection.context[TOKEN_KEY],
+        // };
         if (req) {
           return { user: req['user'] };
         } else {
           return connection;
         }
-        // ({ user: req['user'] })
       },
     }),
     JwtModule.forRoot({
@@ -93,13 +96,14 @@ import { Chat } from './chat/entities/chat.entity';
     RestaurantsModule,
     StockGsModule,
     ChatModule,
+    CommonModule,
   ],
   controllers: [],
   providers: [
     // AppGateway
   ],
 })
-export class AppModule implements NestModule {
+export class AppModule {
   configure(consumer: MiddlewareConsumer) {
     consumer
       .apply(JwtMiddleware)

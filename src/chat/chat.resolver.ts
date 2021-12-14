@@ -1,10 +1,10 @@
+import { Inject } from '@nestjs/common';
 import { Mutation, Resolver, Query, Args, Subscription } from '@nestjs/graphql';
+import { PubSub } from 'graphql-subscriptions';
+import { PUB_SUB } from 'src/common/common.constants';
 import { ChatService } from './chat.service';
 import { CreateChatDto, CreateChatDtoOutput } from './dtos/create-chat.dto';
 import { Chat } from './entities/chat.entity';
-import { PubSub } from 'graphql-subscriptions';
-
-const pubSub = new PubSub();
 
 @Resolver((of) => Chat)
 export class ChatResolver {
@@ -19,19 +19,32 @@ export class ChatResolver {
   ): Promise<CreateChatDtoOutput> {
     return this.chatService.createChat(createChatDto);
   }
-  @Subscription(() => Chat, {
-    resolve: ({ newChat }) => newChat,
-  })
-  async newChat() {
-    return pubSub.asyncIterator('subscriptions');
-  }
 }
 
-// chatSubscription() {
-//     subscribe: (parent, args, { pubSub }) => {
-//       const channel = Math.random().toString(36).slice(2, 15);
-//       onMessagesUpdates(() => pubSub.publish(channel, { messages }));
-//       setTimeout(() => pubSub.publish(channel, { messages }), 0);
-//     };
-//     return pubSub.asyncIterator(`${channel}`);
+//** Subscription 이용할 때 */
+
+// @Resolver((of) => Chat)
+// export class ChatResolver {
+//   constructor(
+//     private readonly chatService: ChatService,
+//     @Inject(PUB_SUB) private readonly pubSub: PubSub,
+//   ) {}
+//   @Query((returns) => [Chat])
+//   chats(): Promise<Chat[]> {
+//     return this.chatService.getChat();
 //   }
+//   @Mutation((returns) => Chat)
+//   async createChat(
+//     @Args('input') createChatDto: CreateChatDto,
+//   ): Promise<CreateChatDto> {
+//     const newChatMut = await this.chatService.createChat(createChatDto);
+//     console.log(newChatMut);
+//     this.pubSub.publish('newChat', { newChat: newChatMut });
+//     return newChatMut;
+//   }
+
+//   @Subscription((returns) => Chat)
+//   newChat() {
+//     return this.pubSub.asyncIterator('newChat');
+//   }
+// }

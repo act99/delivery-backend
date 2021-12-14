@@ -22,3 +22,23 @@ export class ChatService {
     }
   }
 }
+
+//** Subscription 이용할 때 */
+
+// export class ChatService {
+//   constructor(
+//     @InjectRepository(Chat) private readonly chats: Repository<Chat>,
+//   ) {}
+//   getChat(): Promise<Chat[]> {
+//     return this.chats.find();
+//   }
+//   async createChat({ user, text }: CreateChatDto): Promise<CreateChatDto> {
+//     try {
+//       const data = await this.chats.save(this.chats.create({ user, text }));
+//       return data;
+//     } catch (e) {
+//       return null;
+//     }
+//   }
+
+// }
